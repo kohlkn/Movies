@@ -76,7 +76,7 @@ const ucards = [
 
 const theme = createTheme();
 
-const Album = () => {
+const HomeLogged = () => {
 //export default function Album() {
 //these consts and useeffeect allow for fetching from database
 
@@ -147,8 +147,8 @@ const Album = () => {
             Watchdawgs
           </div>
           <a href class="search"> <SearchModal /> </a>
-          <a href="SignIn" class="login">
-              Login
+          <a href="Logout" class="login">
+              Logout
           </a>
         </Toolbar>
       </AppBar>
@@ -322,4 +322,4 @@ also datetime is just stored as a string bc im working on getting the date and t
     </div>
   );
 };
-export default Album;
+export default HomeLogged;

@@ -66,7 +66,7 @@ export default function SignUp() {
         // Email verification sent!
         // ...
       });
-      navigate("/EditPage")
+      navigate("/RegistrationConfirm")
 
     } catch {
       setError("Failed to create an account")
