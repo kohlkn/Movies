@@ -19,7 +19,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import "./MainPage.css";
 //import Navbar from '../Components/Navbar';
 //import SearchBar from '../Components/Searchbar';
-//import MainModal from '../Components/Modal';
+import MainModal from '../Components/Modal';
 import SearchModal from '../Components/Search';
 import Search from '../Components/Searchy';
 import PetsIcon from '@mui/icons-material/Pets';
@@ -81,6 +81,7 @@ const Album = () => {
 //these consts and useeffeect allow for fetching from database
 
   const [movies, setMovies] = useState([]);
+  const [newmovies, setNewMovies] = useState([]);
   const [loading,setLoading] = useState(false);
   //const [searchResults, setSearchResults] = useState([]);
 
@@ -95,6 +96,26 @@ const Album = () => {
         list.push({id: doc.id, ...doc.data()})
       });
       setMovies(list);
+      //setSearchResults(list);
+      setLoading(false)
+
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,"newmovies"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({id: doc.id, ...doc.data()})
+      });
+      setNewMovies(list);
       //setSearchResults(list);
       setLoading(false)
 
@@ -174,32 +195,22 @@ also datetime is just stored as a string bc im working on getting the date and t
 
 
  <Grid container spacing={4}>
-          {movies && movies.map((item) => (
+          {newmovies && newmovies.map((item) => (
             <Grid item key = {item.id} xs={12} sm={6} md={4}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                 <CardMedia
                 component="img"
-                height="100%"
+
                 image={item.img}
                 alt="get from database"
+                class='pics'
               />
                 <CardContent sx={{ flexGrow: 1 }} title={`name : ${item.name}`}>
                 <Typography gutterBottom variant="h5" component="h2">
                       {item.name}
                     </Typography>
-                    <Typography variant="body2" >
-                      {item.rating}
-                    </Typography>
-                    <Typography variant="body2" >
-                      {item.genre}
-                    </Typography>
-                    <Typography variant="body2" >
-                      {item.info}
-                    </Typography>
-                    <Typography variant="body2" >
-                      {item.datetime}
-                    </Typography>
-                    <Button onClick={() => {setOpen(true); setModalData(item);}} style= {{ color: 'red'}}>View</Button>
+
+                    <Button onClick={() => {setOpen(true); setModalData(item);}} style= {{ backgroundColor: 'red', color: 'white'}}>View</Button>
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -241,31 +252,53 @@ also datetime is just stored as a string bc im working on getting the date and t
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={cards.indexOf(card)} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '0%',
-                    }}
-                    image={card.image}//"https://m.media-amazon.com/images/M/MV5BMTg4MDk1ODExN15BMl5BanBnXkFtZTgwNzIyNjg3MDE@._V1_.jpg"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }} title={`name : ${card.name}`}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.name}
+          {movies && movies.map((item) => (
+            <Grid item key = {item.id} xs={12} sm={6} md={4}>
+                <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <CardMedia
+                component="img"
+
+                image={item.img}
+                alt="get from database"
+                class='pics'
+              />
+                <CardContent sx={{ flexGrow: 1 }} title={`name : ${item.name}`}>
+                <Typography gutterBottom variant="h5" component="h2">
+                      {item.name}
                     </Typography>
+
+                    <Button onClick={() => {setOpen(true); setModalData(item);}} style= {{ backgroundColor: 'red', color: 'white'}}>View</Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                    >
+                    <Box sx={style}>
+                      <Typography variant="h6" component="h2">
+                        {modalData.name}
+                      </Typography>
+                      <Typography class='rating'>
+                        {modalData.genre} | {modalData.rating}
+                      </Typography>
+                      <div sx='h1' style= {{ color: 'red'}}>
+                        Showtimes
+                      </div>
+                      <Typography class="showtime">
+                        11:00am 6:00pm 10:30pm
+                      </Typography>
+                      <Button onClick={navigateToBooking} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+                      <div><br></br></div>
+                      <YoutubeEmbed embedId={modalData.youtubelink} />
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {modalData.info}
+                      </Typography>
+                    </Box>
+                    </Modal>
+
                   </CardContent>
-                  <CardActions>
-                    {/*<MainModal />*/}
-                  </CardActions>
+                  
                 </Card>
-              </Grid>
-            ))}
+            </Grid>
+          ))}
           </Grid>
         </Container>
 

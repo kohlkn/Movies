@@ -25,3 +25,8 @@
     color: white;
     float: right;
 }
+
+.pics {
+    height: 400px;
+    width: 100%;
+}
