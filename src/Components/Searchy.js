@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import YoutubeEmbed from "../Components/YoutubeEmbed";
 import {useNavigate} from 'react-router-dom'
 import Box from '@mui/material/Box';
+import { ListItemAvatar } from '@mui/material';
+import { list } from 'firebase/storage';
 
 export default function Search() {
   const [value, setValue] = useState("");
@@ -40,10 +42,11 @@ export default function Search() {
 
   const onSearch = (searchTerm) => {
     setValue(searchTerm);
-    console.log("search ", searchTerm);
+    //console.log("search ", searchTerm);
   };
 
   const [movies, setMovies] = useState([]);
+  const [newmovies, setNewMovies] = useState([]);
   const [loading,setLoading] = useState(false);
 
   useEffect(() => {
@@ -64,15 +67,20 @@ export default function Search() {
     };
   }, []);
 
+
+
   return (
     <div className="App">
-
+      {movies && movies.map((item) => (
       <div className="search-container">
+      
+      
         <div className="search-inner">
-          <input type="text" value={value} onChange={onChange} />
+        
+          <input type="text" value={value} onChange={onChange}/>
 
           {/*<Button onClick={() => onSearch(value)} style= {{ backgroundColor: 'red', color: 'white'}}>Search</Button>*/}
-          <Button onClick={() => {setOpen(true); setModalData(value);}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
+          <Button onClick={() => {setOpen(true); setModalData(item)}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -98,8 +106,11 @@ export default function Search() {
                       </Typography>
                     </Box>
                     </Modal>
-
+          
+              
         </div>
+      
+
         <div className="dropdown">
           {movies
           .filter((item) => {
@@ -120,10 +131,14 @@ export default function Search() {
                 key={item.name}
               >
                 {item.name}
+                
               </div>
+              
             ))}
+            
         </div>
       </div>
+      ))}
     </div>
   );
 }
