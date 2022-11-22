@@ -137,14 +137,14 @@ const Album = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <div class='bod'>
       <CssBaseline />
       <AppBar position="relative" class="bar">
         <Toolbar>
           <PetsIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
+          <div>
             Watchdawgs
-          </Typography>
+          </div>
           <a href class="search"> <SearchModal /> </a>
           <a href="SignIn" class="login">
               Login
@@ -161,18 +161,12 @@ const Album = () => {
           }}
         >
           <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              gutterBottom
-            >
+            <h1>
               Watchdawgs 
-            </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+            </h1>
+            <h2>
               The premier website for booking your next movie theater visit on UGA campus!
-            </Typography>
+            </h2>
             <Stack
               sx={{ pt: 4 }}
               direction="row"
@@ -206,11 +200,15 @@ also datetime is just stored as a string bc im working on getting the date and t
                 class='pics'
               />
                 <CardContent sx={{ flexGrow: 1 }} title={`name : ${item.name}`}>
-                <Typography gutterBottom variant="h5" component="h2">
+                    <h2>
                       {item.name}
-                    </Typography>
-
+                    </h2>
+                    <h2>
+                      {item.datetime}
+                    </h2>
+                    <center>
                     <Button onClick={() => {setOpen(true); setModalData(item);}} style= {{ backgroundColor: 'red', color: 'white'}}>View</Button>
+                    </center>
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -263,11 +261,12 @@ also datetime is just stored as a string bc im working on getting the date and t
                 class='pics'
               />
                 <CardContent sx={{ flexGrow: 1 }} title={`name : ${item.name}`}>
-                <Typography gutterBottom variant="h5" component="h2">
+                    <h2>
                       {item.name}
-                    </Typography>
-
+                    </h2>
+                    <center>
                     <Button onClick={() => {setOpen(true); setModalData(item);}} style= {{ backgroundColor: 'red', color: 'white'}}>View</Button>
+                    </center>
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -319,7 +318,7 @@ also datetime is just stored as a string bc im working on getting the date and t
         <Copyright />
       </Box>
       {/* End footer */}
-    </ThemeProvider>
+    </div>
   );
 };
 export default Album;
