@@ -17,11 +17,11 @@ h2 {
     background-color: black;
     font-family: 'Exo 2';
 }
-
+/*
 .login {
     color: white;
     font-size: 20px;
-    margin-left: 90%;
+    margin-left: 92%;
     text-decoration: none;
     display: flex;
     position: relative;
@@ -31,17 +31,31 @@ h2 {
 .login:hover {
     color: red;
 }
-
-.search {
-    position: relative;
-    margin-left: 85%;
-    text-align: center;
-    display: flex;
-    color: white;
-    float: right;
-}
-
+*/
 .pics {
     height: 400px;
     width: 100%;
 }
+
+.sear {
+    position: relative;
+    margin-top: 5px;
+    margin-left: 76%;
+}
+
+.butt {
+    position: relative;
+    background-color: red;
+    padding: 12px 20px;
+    text-decoration: none;
+    border: 1.5px solid rgb(195, 0, 0);
+    margin: 12px;
+    border-radius: 5px;
+  }
+  .butt:hover{
+    background-color: rgb(195, 0, 0);
+    color: rgba(0, 0, 0, 0.793);
+  }
+  .butt:active {
+    color: black;
+  }

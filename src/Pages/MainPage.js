@@ -35,6 +35,8 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import YoutubeEmbed from "../Components/YoutubeEmbed";
 import {useNavigate} from 'react-router-dom'
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
 
 
 function Copyright() {
@@ -85,6 +87,9 @@ const Album = () => {
   const [loading,setLoading] = useState(false);
   //const [searchResults, setSearchResults] = useState([]);
 
+  let user = firebase.auth().currentUser;
+  console.log(user.uid)
+  console.log(user.email)
   
 
   useEffect(() => {
@@ -137,6 +142,25 @@ const Album = () => {
     navigate('/BookTickets');
   }
 
+  
+  
+  function handleClick(e) {
+    if(user.uid){
+      navigate('/Logout')
+    }
+    else{
+      navigate('/Login');
+    }
+  }
+  var but = 'Login / Sign Up'
+  if(user.uid){
+    var but = 'Logout'
+  }
+  else {
+    var but = 'Login / Sign Up'
+  }
+
+
   return (
     <div class='bod'>
       <CssBaseline />
@@ -146,10 +170,8 @@ const Album = () => {
           <div>
             Watchdawgs
           </div>
-          <a href class="search"> <SearchModal /> </a>
-          <a href="SignIn" class="login">
-              Login
-          </a>
+          <a href class="sear"> <SearchModal /> </a>
+          <button onClick={handleClick} class='butt'>{but}</button>
         </Toolbar>
       </AppBar>
       <main>

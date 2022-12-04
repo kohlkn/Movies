@@ -4,7 +4,6 @@ import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route}
     from 'react-router-dom';
 import Album from './Pages/MainPage';
-import HomeLogged from './Pages/HomeLogged';
 import SignIn from './Pages/SignIn';
 import Checkout from './Pages/Checkout';
 import SignUp from './Pages/SignUp';
@@ -27,7 +26,6 @@ return (
     <Routes>
         <Route exact path='/' element={<Album />} />
         <Route path='/MainPage' element={<Album/>} />
-        <Route path='/HomeLogged' element={<HomeLogged/>} />
         <Route path='/SignUp' element={<SignUp/>} />
         <Route path='/SignIn' element={<SignIn/>} />
         <Route path='/Checkout' element={<Checkout/>} />

@@ -81,31 +81,7 @@ export default function Search() {
 
           {/*<Button onClick={() => onSearch(value)} style= {{ backgroundColor: 'red', color: 'white'}}>Search</Button>*/}
           <Button onClick={() => {setOpen(true); setModalData(item)}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                    >
-                    <Box sx={style}>
-                      <Typography variant="h6" component="h2">
-                        {modalData.name}
-                      </Typography>
-                      <Typography class='rating'>
-                        {modalData.genre} | {modalData.rating}
-                      </Typography>
-                      <div sx='h1' style= {{ color: 'red'}}>
-                        Showtimes
-                      </div>
-                      <Typography class="showtime">
-                        11:00am 6:00pm 10:30pm
-                      </Typography>
-                      <Button onClick={navigateToBooking} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
-                      <div><br></br></div>
-                      <YoutubeEmbed embedId={modalData.youtubelink} />
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        {modalData.info}
-                      </Typography>
-                    </Box>
-                    </Modal>
+                    
           
               
         </div>
@@ -131,8 +107,35 @@ export default function Search() {
                 key={item.name}
               >
                 {item.name}
+
+                <Modal
+                      open={open}
+                      onClose={handleClose}
+                    >
+                    <Box sx={style}>
+                      <Typography variant="h6" component="h2">
+                        {modalData.name}
+                      </Typography>
+                      <Typography class='rating'>
+                        {modalData.genre} | {modalData.rating}
+                      </Typography>
+                      <div sx='h1' style= {{ color: 'red'}}>
+                        Showtimes
+                      </div>
+                      <Typography class="showtime">
+                        11:00am 6:00pm 10:30pm
+                      </Typography>
+                      <Button onClick={navigateToBooking} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+                      <div><br></br></div>
+                      <YoutubeEmbed embedId={modalData.youtubelink} />
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        {modalData.info}
+                      </Typography>
+                    </Box>
+                    </Modal>
                 
               </div>
+              
               
             ))}
             

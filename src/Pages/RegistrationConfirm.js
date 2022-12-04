@@ -39,13 +39,21 @@ const payments = [
   { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
   { name: 'Expiry date', detail: '04/2024' },
 ];*/
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
 
 export default function RegistrationConfirm() {
 
+  let user = firebase.auth().currentUser;
+  console.log(user.uid)
+  console.log(user.email)
+
   const navigate = useNavigate();
   const navigateHome = () => {
-    navigate('/HomeLogged');
+    navigate('/MainPage');
   }
+
+
   return (
     <>
       <br></br>
