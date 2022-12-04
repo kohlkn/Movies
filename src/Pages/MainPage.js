@@ -149,7 +149,7 @@ const Album = () => {
       navigate('/Logout')
     }
     else{
-      navigate('/Login');
+      navigate('/SignIn');
     }
   }
   var but = 'Login'
@@ -171,17 +171,12 @@ const Album = () => {
             Watchdawgs
           </div>
           <a href class="sear"> <SearchModal /> </a>
-          <Button
-            type="submit"
-            halfWidth
-            variant="contained"
+          <button
             class='butt'
-            style= {{ backgroundColor: 'red'}}
-            sx={{ mt: 3, mb: 2 }}
             onClick={handleClick}
         >
           {but}
-        </Button>
+        </button>
         </Toolbar>
       </AppBar>
       <main>
