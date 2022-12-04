@@ -45,8 +45,8 @@ import "firebase/auth";
 export default function RegistrationConfirm() {
 
   let user = firebase.auth().currentUser;
-  console.log(user.uid)
-  console.log(user.email)
+  //console.log(user.uid)
+  //console.log(user.email)
 
   const navigate = useNavigate();
   const navigateHome = () => {

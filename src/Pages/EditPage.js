@@ -283,9 +283,9 @@ function Edit(/*userId, name, age, last*/) {
   const navigate = useNavigate()
 
   let user = firebase.auth().currentUser;
-  console.log(user.uid)
-  console.log(user.email)
-  console.log(user.password)
+  // console.log(user.uid)
+  // console.log(user.email)
+  // console.log(user.password)
 
 const Push = () => {
   const db = getDatabase();

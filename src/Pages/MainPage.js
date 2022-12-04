@@ -88,8 +88,8 @@ const Album = () => {
   //const [searchResults, setSearchResults] = useState([]);
 
   let user = firebase.auth().currentUser;
-  console.log(user.uid)
-  console.log(user.email)
+  //console.log(user.uid)
+  //console.log(user.email)
   
 
   useEffect(() => {
@@ -145,19 +145,19 @@ const Album = () => {
   
   
   function handleClick(e) {
-    if(user.uid){
+    if(user){
       navigate('/Logout')
     }
     else{
       navigate('/Login');
     }
   }
-  var but = 'Login / Sign Up'
-  if(user.uid){
+  var but = 'Login'
+  if(user){
     var but = 'Logout'
   }
   else {
-    var but = 'Login / Sign Up'
+    var but = 'Login'
   }
 
 
@@ -171,7 +171,17 @@ const Album = () => {
             Watchdawgs
           </div>
           <a href class="sear"> <SearchModal /> </a>
-          <button onClick={handleClick} class='butt'>{but}</button>
+          <Button
+            type="submit"
+            halfWidth
+            variant="contained"
+            class='butt'
+            style= {{ backgroundColor: 'red'}}
+            sx={{ mt: 3, mb: 2 }}
+            onClick={handleClick}
+        >
+          {but}
+        </Button>
         </Toolbar>
       </AppBar>
       <main>
