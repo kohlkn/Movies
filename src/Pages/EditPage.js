@@ -317,7 +317,10 @@ import {Button, Form, Grid, Loader} from 'semantic-ui-react';
 import {storage, db} from '../firebase'
 import {useParams, useNavigate} from 'react-router-dom'
 import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
-import { addDoc,updateDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc,updateDoc, collection, doc, getDoc, serverTimestamp, setDoc } from 'firebase/firestore';
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
+
 
 
 const initialState = {
@@ -332,6 +335,11 @@ const initialState = {
 
 }
 const Edit = () => {
+  let user = firebase.auth().currentUser;
+  console.log(user.email)
+  const userid = user.uid
+  console.log(userid)
+
   const [data, setData] = useState(initialState);
   const [file, setFile] = useState(null);
   const [progress, setProgress] = useState(null);
@@ -403,22 +411,22 @@ const validate = () => {
     errors.last = "last is required";
   }
   if(!addone){
-    errors.addone = "addone is required";
+    errors.addone = "address line one is required";
   }
-  if(!addtwo){
-    errors.addtwo = "addtwo is required";
-  }
+  // if(!addtwo){
+  //   errors.addtwo = "addtwo is required";
+  // }
   if(!city){
     errors.city = "city is required";
   }
   if(!state){
-    errors.state = "state are required";
+    errors.state = "state is required";
   }
   if(!zip){
     errors.zip = "zip is required";
   }
   if(!country){
-    errors.country = "country are required";
+    errors.country = "country is required";
   }
   return errors;
 };
@@ -428,25 +436,33 @@ const handleSubmit = async (e) => {
   let errors = validate();
   if(Object.keys(errors).length) return setErrors(errors);
   setIsSubmit(true);
-  if(!id){
-    try{
-      await addDoc(collection(db, "users"),{
+  // if(!id){
+  //   try{
+  //     await addDoc(collection(db, "users"),{
+  //       ...data,
+  //       timestamp: serverTimestamp(),
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }else{
+  //   try{
+  //     await updateDoc(doc(db, "users",id),{
+  //       ...data,
+  //       timestamp: serverTimestamp(),
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  try{
+      await setDoc(doc(db, "users",userid),{
         ...data,
         timestamp: serverTimestamp(),
       });
     } catch (error) {
       console.log(error);
     }
-  }else{
-    try{
-      await updateDoc(doc(db, "users",id),{
-        ...data,
-        timestamp: serverTimestamp(),
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
     //after creating a new movie, navigate to the home page
     navigate("/Profile");
@@ -463,7 +479,7 @@ const handleSubmit = async (e) => {
                 <h2>{id ? "Update Movie details" : "Edit Profile"}</h2>
                 <Form onSubmit = {handleSubmit}>
                   <Form.Input 
-                  label = "name"
+                  label = "First Name"
                   error={errors.name ? {content:errors.name} : null}
                   placeholder = "Enter First Name"
                   name = "name"
@@ -472,7 +488,7 @@ const handleSubmit = async (e) => {
                   autoFocus
                   />
                   <Form.Input 
-                  label = "last"
+                  label = "Last Name"
                   error={errors.last ? {content:errors.last} : null}
                   placeholder = "Enter last"
                   name = "last"
@@ -480,7 +496,7 @@ const handleSubmit = async (e) => {
                   value = {last}
                   /> 
                   <Form.Input 
-                  label = "addone"
+                  label = "Address Line 1"
                   error={errors.addone ? {content:errors.addone} : null}
                   placeholder = "Enter addone"
                   name = "addone"
@@ -488,7 +504,7 @@ const handleSubmit = async (e) => {
                   value = {addone}
                   />
                   <Form.Input 
-                  label = "addtwo"
+                  label = "Address Line 2"
                   error={errors.addtwo ? {content:errors.addtwo} : null}
                   placeholder = "Enter addtwo"
                   name = "addtwo"
@@ -496,29 +512,29 @@ const handleSubmit = async (e) => {
                   value = {addtwo}
                   />
                   <Form.Input
-                  label = "city"
+                  label = "City"
                   placeholder = "Enter Release Date here"
                   name = "city"
                   onChange={handleChange}
                   value = {city}
                   />
                   <Form.Input
-                  label = "state"
+                  label = "State"
                   placeholder = "enter your state here"
                   name = "state"
                   onChange={handleChange}
                   value = {state}
                   />
                   <Form.Input
-                  label = "zip"
-                  placeholder = "paste the youtube link here"
+                  label = "Zip Code"
+                  placeholder = "Please enter your zip here"
                   name = "zip"
                   onChange={handleChange}
                   value = {zip}
                   />
                   <Form.Input
-                  label = "country"
-                  placeholder = "paste the youtube link here"
+                  label = "Country"
+                  placeholder = "Please enter your country here"
                   name = "country"
                   onChange={handleChange}
                   value = {country}
