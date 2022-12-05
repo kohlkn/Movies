@@ -460,7 +460,7 @@ const handleSubmit = async (e) => {
             <div>
               {isSubmit ?( <Loader active inline = "centered" size = "huge" />): (
                 <>
-                <h2>{id ? "Update Movie details" : "Add Movie"}</h2>
+                <h2>{id ? "Update Movie details" : "Edit Profile"}</h2>
                 <Form onSubmit = {handleSubmit}>
                   <Form.Input 
                   label = "name"
