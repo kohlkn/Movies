@@ -1,6 +1,6 @@
 // //import * as React from 'react';
 // import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+//import Button from '@mui/material/Button';
 // import TextField from '@mui/material/TextField';
 // import Grid from '@mui/material/Grid';
 // import Paper from '@mui/material/Paper';
@@ -16,22 +16,22 @@ import Button from '@mui/material/Button';
 // export default function EditPage() {
 
 //   const fnRef = useRef();
-//   const { info } = useAuth()
+//   const { addone } = useAuth()
 //   const [error, setError] = useState("")
 //   const [message, setMessage] = useState("")
 //   const [loading, setLoading] = useState(false)
 //   const navigate = useNavigate()
 
-//   async function handleSubmit(e) {
+//   async function (e) => setData({ name: e.target.value })(e) {
 //     e.preventDefault()
 
 //     try {
 //       setError("")
 //       setLoading(true)
-//       await info(fnRef.current.value)
+//       await addone(fnRef.current.value)
 //       navigate('/Profile')
 //     } catch {
-//       setError("Failed to change info")
+//       setError("Failed to change addone")
 //     }
 
 //     setLoading(false)
@@ -40,7 +40,7 @@ import Button from '@mui/material/Button';
 //   return(
 // <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
 //   <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-//   <Form onSubmit={handleSubmit}>
+//   <Form onSubmit={(e) => setData({ name: e.target.value })}>
 //     <h1>
 //       <center>
 //         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -209,7 +209,7 @@ import Button from '@mui/material/Button';
 //       </Grid>
 //       <Grid item xs={12} md={6}>
 //         {/* <Button
-//           // onClick={handleSubmit}
+//           // onClick={(e) => setData({ name: e.target.value })}
 //           type="submit"
 //           fullWidth
 //           variant="contained"
@@ -219,7 +219,7 @@ import Button from '@mui/material/Button';
 //           Confirm
 //         </Button> */}
 //         <Button
-//           // onClick={handleSubmit}
+//           // onClick={(e) => setData({ name: e.target.value })}
 //           type="submit"
 //           fullWidth
 //           variant="contained"
@@ -239,12 +239,12 @@ import Button from '@mui/material/Button';
     
 //   );
 // }
-
-import {useState} from 'react';
-import firebase from 'firebase/compat/app';
-import { getDatabase, ref, set } from "firebase/database";
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useNavigate } from 'react-router-dom'
+////////////////////////////////////////////////////
+// import {useState} from 'react';
+// import firebase from 'firebase/compat/app';
+// import { getDatabase, ref, set } from "firebase/database";
+// import { getAuth, onAuthStateChanged } from 'firebase/auth'
+// import { useNavigate } from 'react-router-dom'
 
 // function Edit() {
 // const [name , setName] = useState();
@@ -259,141 +259,291 @@ import { useNavigate } from 'react-router-dom'
 // }
 
 
-function Edit(/*userId, name, age, last*/) {
+// function Edit(/*userId, name, age, last*/) {
 
-  const [UID, getUID] = useState()
-  const [name, setName] = useState()
-  const [last, setLast] = useState()
-  const [addone, setAddone] = useState()
-  const [addtwo, setAddtwo] = useState()
-  const [city, setCity] = useState()
-  const [state, setState] = useState()
-  const [zip, setZip] = useState()
-  const [country, setCountry] = useState()
+//   const [UID, getUID] = useState()
+//   const [name, setName] = useState()
+//   const [last, setLast] = useState()
+//   const [addone, setAddone] = useState()
+//   const [addtwo, setAddtwo] = useState()
+//   const [city, setCity] = useState()
+//   const [state, setState] = useState()
+//   const [zip, setZip] = useState()
+//   const [country, setCountry] = useState()
 
-  const [oldpassword, setOldpassword] = useState()
-  const [newpassword, setNewpassword] = useState()
+//   const [oldpassword, setOldpassword] = useState()
+//   const [newpassword, setNewpassword] = useState()
 
-  const [cardname, setCardname] = useState()
-  const [cardnum, setCardnum] = useState()
-  const [exp, setExp] = useState()
-  const [cvv, setCvv] = useState()
-  const auth = getAuth()
-  const [currentUser, setCurrentUser] = useState()
-  const navigate = useNavigate()
+//   const [cardname, setCardname] = useState()
+//   const [cardnum, setCardnum] = useState()
+//   const [exp, setExp] = useState()
+//   const [cvv, setCvv] = useState()
+//   const auth = getAuth()
+//   const [currentUser, setCurrentUser] = useState()
+//   const navigate = useNavigate()
 
-  let user = firebase.auth().currentUser;
-  // console.log(user.uid)
-  // console.log(user.email)
-  // console.log(user.password)
+//   let user = firebase.auth().currentUser;
+//   // console.log(user.uid)
+//   // console.log(user.email)
+//   // console.log(user.password)
 
-const Push = () => {
-  const db = getDatabase();
-  firebase.auth().onAuthStateChanged((user) => {
-    if(user) {
-      const uid = user.uid;
+// const Push = () => {
+//   const db = getDatabase();
+//   firebase.auth().onAuthStateChanged((user) => {
+//     if(user) {
+//       const uid = user.uid;
 
-  set(ref(db, `/users/${uid}`), {
-    firstname: name,
-    lastname: last,
-    addone: addone,
-    addtwo: addtwo,
-    city: city,
-    state: state,
-    zip: zip,
-    country: country,
-    /*oldpassword: oldpassword,
-    newpassword: newpassword,
-    cardname: cardname,
-    cardnum: cardnum,
-    exp: exp,
-    cvv: cvv,*/
+//   set(ref(db, `/users/${uid}`), {
+//     firstname: name,
+//     lastname: last,
+//     addone: addone,
+//     addtwo: addtwo,
+//     city: city,
+//     state: state,
+//     zip: zip,
+//     country: country,
+//     /*oldpassword: oldpassword,
+//     newpassword: newpassword,
+//     cardname: cardname,
+//     cardnum: cardnum,
+//     exp: exp,
+//     cvv: cvv,*/
 
-  });
+//   });
+// }
+
+import React, {useState,useEffect} from 'react';
+import {Button, Form, Grid, Loader} from 'semantic-ui-react';
+import {storage, db} from '../firebase'
+import {useParams, useNavigate} from 'react-router-dom'
+import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
+import { addDoc,updateDoc, collection, doc, getDoc, serverTimestamp } from 'firebase/firestore';
+
+
+const initialState = {
+  name: "",
+  last:  "",
+  addone:  "",
+  addtwo:  "",
+  city: "",
+  state: "",
+  zip: "",
+  country: '',
+
 }
-});
-  navigate('/Profile')
-}
-
-
-return (
-	<div className="App" style={{marginTop : 50}}>
-    <h1>Edit Profile</h1>
-	<center>
-
-  <input type='password' placeholder="Enter new Old Password" value={oldpassword}
-	onChange={(e) => setOldpassword(e.target.value)}/>
-	<br/><br/>
-
-  <input type='password' placeholder="Enter new New Password" value={newpassword}
-	onChange={(e) => setNewpassword(e.target.value)}/>
-	<br/><br/>
-
-	<input placeholder="Enter your First Name" value={name}
-	onChange={(e) => setName(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Last Name" value={last}
-	onChange={(e) => setLast(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Address Line 1" value={addone}
-	onChange={(e) => setAddone(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Address Line 2" value={addtwo}
-	onChange={(e) => setAddtwo(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your City" value={city}
-	onChange={(e) => setCity(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your State" value={state}
-	onChange={(e) => setState(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Zip" value={zip}
-	onChange={(e) => setZip(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Country" value={country}
-	onChange={(e) => setCountry(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter the Cardholder Name" value={cardname}
-	onChange={(e) => setCardname(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter your Card Number" value={cardnum}
-	onChange={(e) => setCardnum(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter Expiration Date" value={exp}
-	onChange={(e) => setExp(e.target.value)}/>
-	<br/><br/>
-
-  <input placeholder="Enter CVV" value={cvv}
-	onChange={(e) => setCvv(e.target.value)}/>
-	<br/><br/>
+const Edit = () => {
+  const [data, setData] = useState(initialState);
+  const [file, setFile] = useState(null);
+  const [progress, setProgress] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+  const {name,last,addone, addtwo, city,state,zip,country} = data;
+  const navigate = useNavigate();
+  const {id} = useParams();
   
-  <input type='checkbox'/> Promo?
-  <br/><br/>
 
-	<Button
-    type="submit"
-    halfWidth
-    variant="contained"
-    style= {{ backgroundColor: 'red'}}
-    sx={{ mt: 3, mb: 2 }}
-    onClick={Push}
-    >
-      Update Profile
-    </Button>
-	</center>
-	</div>
-);
+  useEffect(() => {
+    id && getSingleMovie();
+  }, [id])
+
+  const getSingleMovie = async () => {
+    //movies is the collection name within firebase 
+    const docRef = doc(db, "users", id);
+    const snapshot = await getDoc(docRef);
+    if(snapshot.exists()) {
+      setData({...snapshot.data()});
+    }
+  };
+
+
+  useEffect(() => {
+    const uploadFile = () => {
+      const name = new Date().getTime() + file.name;
+      console.log(name)
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on("state_changed", (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progress);
+        switch(snapshot.state) {
+          case "paused":
+            console.log("upload is paused");
+            break;
+          case "running":
+            console.log("upload is running");
+            break;
+          default:
+            break;
+        }
+      }, (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setData((prev) => ({...prev, img: downloadURL}));
+        });
+      }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
+
+
+const handleChange = (e) => {
+  setData({...data, [e.target.name]: e.target.value})
+};
+
+const validate = () => {
+  let errors = {};
+  if(!name){
+    errors.name = "name is required";
+  }
+  if(!last){
+    errors.last = "last is required";
+  }
+  if(!addone){
+    errors.addone = "addone is required";
+  }
+  if(!addtwo){
+    errors.addtwo = "addtwo is required";
+  }
+  if(!city){
+    errors.city = "city is required";
+  }
+  if(!state){
+    errors.state = "state are required";
+  }
+  if(!zip){
+    errors.zip = "zip is required";
+  }
+  if(!country){
+    errors.country = "country are required";
+  }
+  return errors;
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  let errors = validate();
+  if(Object.keys(errors).length) return setErrors(errors);
+  setIsSubmit(true);
+  if(!id){
+    try{
+      await addDoc(collection(db, "users"),{
+        ...data,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }else{
+    try{
+      await updateDoc(doc(db, "users",id),{
+        ...data,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+    //after creating a new movie, navigate to the home page
+    navigate("/Profile");
+};
+  return (
+    <div>
+      <center>
+      <Grid centered verticalAlign='middle' columns = "3" style = {{height: "80 vh"}}>
+        <Grid.Row>
+          <Grid.Column textAlign='center'>
+            <div>
+              {isSubmit ?( <Loader active inline = "centered" size = "huge" />): (
+                <>
+                <h2>{id ? "Update Movie details" : "Add Movie"}</h2>
+                <Form onSubmit = {handleSubmit}>
+                  <Form.Input 
+                  label = "name"
+                  error={errors.name ? {content:errors.name} : null}
+                  placeholder = "Enter First Name"
+                  name = "name"
+                  onChange={handleChange}
+                  value = {name}
+                  autoFocus
+                  />
+                  <Form.Input 
+                  label = "last"
+                  error={errors.last ? {content:errors.last} : null}
+                  placeholder = "Enter last"
+                  name = "last"
+                  onChange={handleChange}
+                  value = {last}
+                  /> 
+                  <Form.Input 
+                  label = "addone"
+                  error={errors.addone ? {content:errors.addone} : null}
+                  placeholder = "Enter addone"
+                  name = "addone"
+                  onChange={handleChange}
+                  value = {addone}
+                  />
+                  <Form.Input 
+                  label = "addtwo"
+                  error={errors.addtwo ? {content:errors.addtwo} : null}
+                  placeholder = "Enter addtwo"
+                  name = "addtwo"
+                  onChange={handleChange}
+                  value = {addtwo}
+                  />
+                  <Form.Input
+                  label = "city"
+                  placeholder = "Enter Release Date here"
+                  name = "city"
+                  onChange={handleChange}
+                  value = {city}
+                  />
+                  <Form.Input
+                  label = "state"
+                  placeholder = "enter your state here"
+                  name = "state"
+                  onChange={handleChange}
+                  value = {state}
+                  />
+                  <Form.Input
+                  label = "zip"
+                  placeholder = "paste the youtube link here"
+                  name = "zip"
+                  onChange={handleChange}
+                  value = {zip}
+                  />
+                  <Form.Input
+                  label = "country"
+                  placeholder = "paste the youtube link here"
+                  name = "country"
+                  onChange={handleChange}
+                  value = {country}
+                  />
+
+
+                  <Button primary 
+                  type = "submit" 
+                  disabled = {progress !== null && progress < 100}
+                  >
+                    Submit
+                    </Button>
+                </Form>
+                </>
+              )}
+            </div>
+
+          </Grid.Column>
+        </Grid.Row>
+
+      </Grid>
+      </center>
+    </div>
+
+  )
 }
 
-export default Edit;
-
+export default Edit

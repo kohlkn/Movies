@@ -7,6 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## `npm i mdb-react-ui-kit`
 ## `npm i react-scripts`
+## `npm i semantic-ui-react`
 
 ## Available Scripts
 
