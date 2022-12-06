@@ -436,7 +436,7 @@ const handleSubmit = async (e) => {
   let errors = validate();
   if(Object.keys(errors).length) return setErrors(errors);
   setIsSubmit(true);
-  // if(!id){
+  if(!id){
   //   try{
   //     await addDoc(collection(db, "users"),{
   //       ...data,
@@ -445,17 +445,8 @@ const handleSubmit = async (e) => {
   //   } catch (error) {
   //     console.log(error);
   //   }
-  // }else{
-  //   try{
-  //     await updateDoc(doc(db, "users",id),{
-  //       ...data,
-  //       timestamp: serverTimestamp(),
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
   // }
-  try{
+try{
       await setDoc(doc(db, "users",userid),{
         ...data,
         timestamp: serverTimestamp(),
@@ -463,6 +454,19 @@ const handleSubmit = async (e) => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  else{
+    try{
+      await updateDoc(doc(db, "users",userid),{
+        ...data,
+        timestamp: serverTimestamp(),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
 
     //after creating a new movie, navigate to the home page
     navigate("/Profile");

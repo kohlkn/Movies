@@ -1,8 +1,12 @@
 import React from "react";
-import { Nav, NavLink, NavMenu } 
-    from "./NavbarElements";
+import { Nav, NavLink, NavMenu } from "./NavbarElements";
+import firebase from 'firebase/compat/app';
+import "firebase/auth";
+
+
   
 const Navbar = () => {
+let user = firebase.auth().currentUser;
   return (
     <>
       <Nav>
@@ -31,7 +35,7 @@ const Navbar = () => {
           <NavLink to="/Profile" activestyle='true'>
             Profile
           </NavLink>
-          <NavLink to="/EditPage" activestyle='true'>
+          <NavLink to={(`/EditPage/${user.uid}`)} activestyle='true'>
             Edit profile
           </NavLink>
           <NavLink to='/Logout' activestyle='true'>
