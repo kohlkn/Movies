@@ -80,7 +80,7 @@ get(child(dbRef, `users/${uid}`)).then((snapshot) => {
 });
 }}
 )
-
+            
 
   return(
     <Typography>
