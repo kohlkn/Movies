@@ -16,6 +16,7 @@ import { AuthProvider } from "./Contexts/AuthContext"
 import ForgotPassword from './Pages/ForgotPassword'
 import Logout from './Pages/Logout'
 import UpdatePassword from './Pages/UpdatePassword'
+import Test from './Pages/Test'
 
   
 function App() {
@@ -37,6 +38,7 @@ return (
         <Route path='/ForgotPassword' element={<ForgotPassword/>} />
         <Route path='/Logout' element={<Logout/>} />
         <Route path='/UpdatePassword' element={<UpdatePassword/>} />
+        <Route path='/test' element={<Test/>} />
     </Routes>
     </AuthProvider>
     </Router>

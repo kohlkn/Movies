@@ -49,7 +49,8 @@ export default function Profile(){
   const [userId, getUserId] = useState()
   const dbRef = ref(getDatabase());
   const navigate = useNavigate()
-  const routeChange = () => navigate('/EditPage')
+  let user = firebase.auth().currentUser;
+  const routeChange = () => navigate(`/EditPage/${user.uid}`)
   const [currentUser, setCurrentUser] = useState()
 
   const [name, getName] = useState()
