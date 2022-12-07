@@ -17,6 +17,8 @@ import ForgotPassword from './Pages/ForgotPassword'
 import Logout from './Pages/Logout'
 import UpdatePassword from './Pages/UpdatePassword'
 import Test from './Pages/Test'
+import About from './Pages/About'
+import Contact from './Pages/Contact'
 
   
 function App() {
@@ -38,6 +40,8 @@ return (
         <Route path='/ForgotPassword' element={<ForgotPassword/>} />
         <Route path='/Logout' element={<Logout/>} />
         <Route path='/UpdatePassword' element={<UpdatePassword/>} />
+        <Route path='/About' element={<About/>} />
+        <Route path='/Contact' element={<Contact/>} />
         <Route path='/test' element={<Test/>} />
     </Routes>
     </AuthProvider>

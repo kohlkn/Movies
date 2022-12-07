@@ -43,7 +43,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="localhost:3000/MainPage">
         Watchdawgs
       </Link>{' '}
       {new Date().getFullYear()}
@@ -170,6 +170,8 @@ const Album = () => {
           <div>
             Watchdawgs
           </div>
+          <Link class='about' href="/About">About Us</Link>
+          <Link class='contact' href="/Contact">Contact</Link>
           <a href class="sear"> <SearchModal /> </a>
           <button
             class='butt'

@@ -32,6 +32,7 @@ h2 {
     color: red;
 }
 */
+
 .pics {
     height: 400px;
     width: 100%;
@@ -40,7 +41,22 @@ h2 {
 .sear {
     position: relative;
     margin-top: 5px;
-    margin-left: 76%;
+    margin-left: 40px;
+}
+
+.about {
+    position: relative;
+    margin-left: 56%;
+    text-decoration: none;
+    color: red;
+    white-space: nowrap;
+}
+
+.contact {
+    position: relative;
+    margin-left: 50px;
+    text-decoration: none;
+    color: red;
 }
 
 .butt {
@@ -51,6 +67,7 @@ h2 {
     border: 1.5px solid rgb(195, 0, 0);
     margin: 12px;
     border-radius: 5px;
+    margin-left: 30px;
   }
   .butt:hover{
     background-color: rgb(195, 0, 0);
