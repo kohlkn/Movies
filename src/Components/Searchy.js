@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {db} from '../firebase';
-import { collection, onSnapshot} from 'firebase/firestore';
+import { collection, getDocs, onSnapshot} from 'firebase/firestore';
 import "./Searchy.css";
 import Button from '@mui/material/Button';
 
@@ -49,6 +49,7 @@ export default function Search() {
   const [newmovies, setNewMovies] = useState([]);
   const [loading,setLoading] = useState(false);
 
+
   useEffect(() => {
     setLoading(true);
     const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
@@ -67,7 +68,33 @@ export default function Search() {
     };
   }, []);
 
+  function getVal(value) {
+    setLoading(true);
+    const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        
+        list.push({id: doc.id, ...doc.data()})
+        value = doc.id
+        //value = value.name
+        console.log(doc.name)
+        //if(doc.name = value){
+          //value = doc.name;
+          //console.log(value)
+          //console.log(value)
+        //}
+      });
+      setMovies(list);
+      setLoading(false)
 
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+
+  }
 
   return (
     <div className="App">
@@ -80,7 +107,7 @@ export default function Search() {
           <input type="text" value={value} onChange={onChange}/>
 
           {/*<Button onClick={() => onSearch(value)} style= {{ backgroundColor: 'red', color: 'white'}}>Search</Button>*/}
-          <Button onClick={() => {setOpen(true); setModalData(item)}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
+          <Button onClick={() => {setOpen(true); setModalData(item); getVal(value)}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
                   <Modal
                       open={open}
                       onClose={handleClose}

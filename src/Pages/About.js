@@ -61,6 +61,19 @@ export default function About() {
                     </center>
                 </h3>
             </div>
+            <div>
+                <h1>
+                    Sam Wilson
+                </h1>
+                <h2>
+                    Frontend Developer
+                </h2>
+                <h3 class='paragraph'>
+                    Sam aided in the creation of the user inferface of the website.
+                    He also did behind the scene work such as the team deliverables and assignments.
+                </h3>
+
+            </div>
         </>
     )
 }
