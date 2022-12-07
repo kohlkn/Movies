@@ -494,7 +494,7 @@ try{
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                  <h1>
                   <center>
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'red' }}>
                     <AccountCircleIcon />
                     </Avatar>
                     Edit Profile
