@@ -20,7 +20,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="localhost:3000/MainPage">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -30,6 +30,7 @@ function Copyright() {
 }
 
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
+
 
 function getStepContent(step) {
   switch (step) {
@@ -71,7 +72,7 @@ export default function Checkout() {
       >
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+            Watchdawgs
           </Typography>
         </Toolbar>
       </AppBar>
@@ -82,7 +83,25 @@ export default function Checkout() {
           </Typography>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
-              <Step key={label}>
+              <Step key={label} sx={{
+                '& .MuiStepLabel-root .Mui-completed': {
+                  color: 'red', // circle color (COMPLETED)
+                },
+                '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                  {
+                    color: 'grey', // Just text label (COMPLETED)
+                  },
+                '& .MuiStepLabel-root .Mui-active': {
+                  color: 'red', // circle color (ACTIVE)
+                },
+                '& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel':
+                  {
+                    color: 'black', // Just text label (ACTIVE)
+                  },
+                '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                  fill: 'white', // circle's number (ACTIVE)
+                },
+              }}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
