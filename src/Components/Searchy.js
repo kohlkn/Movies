@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {db} from '../firebase';
-import { collection, getDocs, onSnapshot} from 'firebase/firestore';
+import { collection, getDocs, onSnapshot, where, query} from 'firebase/firestore';
 import "./Searchy.css";
 import Button from '@mui/material/Button';
 
@@ -69,31 +69,49 @@ export default function Search() {
   }, []);
 
   function getVal(value) {
-    setLoading(true);
-    const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
-      let list = [];
-      snapshot.docs.forEach((doc) => {
+    // setLoading(true);
+    // const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
+    //   let list = [];
+    //   snapshot.docs.forEach((doc) => {
         
-        list.push({id: doc.id, ...doc.data()})
-        value = doc.id
-        //value = value.name
-        console.log(doc.name)
-        //if(doc.name = value){
-          //value = doc.name;
-          //console.log(value)
-          //console.log(value)
-        //}
-      });
-      setMovies(list);
-      setLoading(false)
+    //     list.push({id: doc.id, ...doc.data()})
+    //     value = doc.name
+        
+    //     //if(doc.name = value){
+    //       //value = doc.name;
+    //       //console.log(value)
+    //       console.log(value)
+    //     //}
+    //   });
+    //   setMovies(list);
+    //   setLoading(false)
 
-    }, (error)=> {
-      console.log(error);
-    });
-    return () => {
-      unsub();
-    };
+    // }, (error)=> {
+    //   console.log(error);
+    // });
+    // return () => {
+    //   unsub();
+    // };
+    //console.log(value)
+    const moviesRef = collection(db, 'movies')
+    const getDocuments = async () => {
+      const data = await getDocs(moviesRef);
+      setMovies(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+      //console.log(movies.id)
+  };
 
+  getDocuments();
+  for(let i = 0; i < movies.length; i++){
+    if(value == movies[i].name){
+      value = movies[i]
+      //console.log(movies[i].id)
+    }
+  }
+
+  console.log(value)
+  //return { value };
+  setModalData(value)
+  console.log(modalData.name)
   }
 
   return (
@@ -107,7 +125,7 @@ export default function Search() {
           <input type="text" value={value} onChange={onChange}/>
 
           {/*<Button onClick={() => onSearch(value)} style= {{ backgroundColor: 'red', color: 'white'}}>Search</Button>*/}
-          <Button onClick={() => {setOpen(true); setModalData(item); getVal(value)}} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
+          <Button onClick={() => {setOpen(true); getVal(value); }} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
                   <Modal
                       open={open}
                       onClose={handleClose}
