@@ -12,36 +12,15 @@ import { useNavigate } from "react-router-dom";
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';*/
 import { getDatabase, ref, child, get } from "firebase/database";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 //import { currentUser } from 'firebase/auth';
 import { useAuth } from '../Contexts/AuthContext'
-
+import { collection, deleteDoc, onSnapshot, doc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import firebase from 'firebase/compat/app';
-
-
-const prof = [
-  {
-    email: '',
-    firstName: '',
-    lastName: '',
-    addOne: '',
-    addTwo: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: ''
-  }
-];
-
-const payment = [
-  {
-    name: '',
-    cardnum: '',
-    exp: '',
-    cvv: '',
-  }
-];
+import { db } from '../firebase';
+import "firebase/auth";
+import './MainPage.css'
 
 
 export default function Profile(){
@@ -53,38 +32,79 @@ export default function Profile(){
   const routeChange = () => navigate(`/EditPage/${user.uid}`)
   const [currentUser, setCurrentUser] = useState()
 
-  const [name, getName] = useState()
-  const [last, getLast] = useState()
-  const [addone, getAddone] = useState()
-  const [addtwo, getAddtwo] = useState()
-  const [city, getCity] = useState()
-  const [state, getState] = useState()
-  const [zip, getZip] = useState()
-  const [country, getCountry] = useState()
+  // const [name, getName] = useState()
+  // const [last, getLast] = useState()
+  // const [addone, getAddone] = useState()
+  // const [addtwo, getAddtwo] = useState()
+  // const [city, getCity] = useState()
+  // const [state, getState] = useState()
+  // const [zip, getZip] = useState()
+  // const [country, getCountry] = useState()
+  const [users, setUsers] = useState([]);
+  const [loading,setLoading] = useState(false);
 
-  const db = getDatabase();
+  
+
+  //const db = getDatabase();
+  let userlog = firebase.auth().currentUser;
   firebase.auth().onAuthStateChanged((user) => {
     if(user) {
       const uid = user.uid;
+      
 
 
-get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-  if (snapshot.exists()) {
-    //console.log(snapshot.val());
-    const val = snapshot.val();
-    return val;
-  } else {
-    console.log("No data available");
-  }
-}).catch((error) => {
-  console.error(error);
-});
+// get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+//   if (snapshot.exists()) {
+//     //console.log(snapshot.val());
+//     const val = snapshot.val();
+//     return val;
+//   } else {
+//     console.log("No data available");
+//   }
+// }).catch((error) => {
+//   console.error(error);
+// });
+
 }}
+
 )
+/*
+const fetchUsers = async () => {
+  const res = db.collection('users')
+  const data = await res.get()
+  data.docs.forEach(item => {
+    setUsers([...users, item.data()])
+  })
+}
+useEffect(() => {
+  fetchUsers()
+}, [])*/
+useEffect(() => {
+  setLoading(true);
+  //the collection db, "movies" calls upon a database named movies in the firebase setup
+  const unsub = onSnapshot(collection(db,"users"), (snapshot) => {
+    let list = [];
+    snapshot.docs.forEach((doc) => {
+      if(doc.id == user.uid){
+      list.push({id: doc.id, ...doc.data()})
+      }
+    });
+    setUsers(list);
+    //setSearchResults(list);
+    setLoading(false)
+
+  }, (error)=> {
+    console.log(error);
+  });
+  return () => {
+    unsub();
+  };
+}, []);
             
 
   return(
-    <Typography>
+    <div>
+      {users && users.map((item) => (
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <h1>
@@ -95,65 +115,61 @@ get(child(dbRef, `users/${uid}`)).then((snapshot) => {
               Profile
             </center>
           </h1>
-          {prof.map((pro) => (
               <React.Fragment>
       <Grid container spacing={3}>
       <Grid item xs={12}>
-          Email Address: {pro.email}
+          Email Address: <div class='items'>{user.email}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          First Name: {pro.firstName}
+          First Name: <div class='items'>{item.name}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          Last Name: {pro.lastName}
+          Last Name: <div class='items'>{item.last}</div>
         </Grid>
         <Grid item xs={12}>
-          Address Line 1: {pro.addOne}
+          Address Line 1: <div class='items'>{item.addone}</div>
         </Grid>
         <Grid item xs={12}>
-          Address Line 2: {pro.addTwo}
+          Address Line 2: <div class='items'>{item.addtwo}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          City: {pro.city}
+          City: <div class='items'>{item.city}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          State: {pro.state}
+          State: <div class='items'>{item.state}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          Zip code: {pro.zip}
+          Zip code: <div class='items'>{item.zip}</div>
         </Grid>
         <Grid item xs={12} sm={6}>
-          Country: {pro.country}
+          Country: <div class='items'>{item.country}</div>
         </Grid>
       </Grid>
     </React.Fragment>
-    ))}
       <div><br></br></div>
-            {payment.map((pay) => (
               <React.Fragment>
-              <Typography variant="h6" gutterBottom>
-                 <h3>
-                  <center>
+              <div variant="h6" gutterBottom>
+                 <h2>
+                  <center><b>
                     Payment method
-                  </center>
-                </h3>
-              </Typography>
+                    </b></center>
+                </h2>
+              </div>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                  Cardholder Name: {pay.name}
+                  Cardholder Name: <div class='items'>{item.cardname}</div>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  Card Number: {pay.cardnum}
+                  Card Number: <div class='items'>{item.cardnum}</div>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  Expiration Date: {pay.exp}
+                  Expiration Date: <div class='items'>{item.exp}</div>
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  CVV: {pay.cvv}
+                  CVV: <div class='items'>{item.cvv}</div>
                 </Grid>
               </Grid>
             </React.Fragment>
-            ))}
 
 
           <Grid item xs={12} md={6}>
@@ -170,6 +186,7 @@ get(child(dbRef, `users/${uid}`)).then((snapshot) => {
           </Grid>
         </Paper>
       </Container>
-    </Typography>
+      ))}
+    </div>
   );
 }

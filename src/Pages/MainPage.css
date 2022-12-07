@@ -59,3 +59,8 @@ h2 {
   .butt:active {
     color: black;
   }
+
+  .items {
+    color: red;
+    font-weight: bold;
+  }

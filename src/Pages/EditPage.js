@@ -313,7 +313,12 @@
 // }
 
 import React, {useState,useEffect} from 'react';
-import {Button, Form, Grid, Loader} from 'semantic-ui-react';
+import {Form, Grid, Loader} from 'semantic-ui-react';
+import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
+import Paper from '@mui/material/Paper';
 import {storage, db} from '../firebase'
 import {useParams, useNavigate} from 'react-router-dom'
 import { getDownloadURL, uploadBytesResumable, ref } from 'firebase/storage';
@@ -332,6 +337,10 @@ const initialState = {
   state: "",
   zip: "",
   country: '',
+  cardname: '',
+  cardnum: '',
+  exp: '',
+  cvv: ''
 
 }
 const Edit = () => {
@@ -345,7 +354,7 @@ const Edit = () => {
   const [progress, setProgress] = useState(null);
   const [errors, setErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const {name,last,addone, addtwo, city,state,zip,country} = data;
+  const {name,last,addone, addtwo, city,state,zip,country,cardname,cardnum,exp,cvv} = data;
   const navigate = useNavigate();
   const {id} = useParams();
   
@@ -480,9 +489,21 @@ try{
             <div>
               {isSubmit ?( <Loader active inline = "centered" size = "huge" />): (
                 <>
-                <h2>{id ? "Update Profile" : "Edit Profile"}</h2>
                 <Form onSubmit = {handleSubmit}>
-                  <Form.Input 
+                <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+                <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+                 <h1>
+                  <center>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <AccountCircleIcon />
+                    </Avatar>
+                    Edit Profile
+                  </center>
+                </h1>
+              <React.Fragment>
+      <Grid container spacing={3}>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input 
                   label = "First Name"
                   error={errors.name ? {content:errors.name} : null}
                   placeholder = "Enter First Name"
@@ -491,7 +512,10 @@ try{
                   value = {name}
                   autoFocus
                   />
-                  <Form.Input 
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input 
                   label = "Last Name"
                   error={errors.last ? {content:errors.last} : null}
                   placeholder = "Enter last"
@@ -499,7 +523,10 @@ try{
                   onChange={handleChange}
                   value = {last}
                   /> 
-                  <Form.Input 
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12}>
+          <Form.Input 
                   label = "Address Line 1"
                   error={errors.addone ? {content:errors.addone} : null}
                   placeholder = "Enter addone"
@@ -507,7 +534,10 @@ try{
                   onChange={handleChange}
                   value = {addone}
                   />
-                  <Form.Input 
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12}>
+          <Form.Input 
                   label = "Address Line 2"
                   error={errors.addtwo ? {content:errors.addtwo} : null}
                   placeholder = "Enter addtwo"
@@ -515,42 +545,122 @@ try{
                   onChange={handleChange}
                   value = {addtwo}
                   />
-                  <Form.Input
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input
                   label = "City"
                   placeholder = "Enter Release Date here"
                   name = "city"
                   onChange={handleChange}
                   value = {city}
                   />
-                  <Form.Input
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input
                   label = "State"
                   placeholder = "enter your state here"
                   name = "state"
                   onChange={handleChange}
                   value = {state}
                   />
-                  <Form.Input
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input
                   label = "Zip Code"
                   placeholder = "Please enter your zip here"
                   name = "zip"
                   onChange={handleChange}
                   value = {zip}
                   />
-                  <Form.Input
+                  <br></br>
+        </Grid>
+        <Grid class='forminput' item xs={12} sm={6}>
+          <Form.Input
                   label = "Country"
                   placeholder = "Please enter your country here"
                   name = "country"
                   onChange={handleChange}
                   value = {country}
                   />
+                  <br></br>
+        </Grid>
+      </Grid>
+    </React.Fragment>
+      <div><br></br></div>
+              <React.Fragment>
+              <div variant="h6" gutterBottom>
+                 <h2>
+                  <center><b>
+                    Payment method
+                    </b></center>
+                </h2>
+              </div>
+              <Grid container spacing={3}>
+                <Grid class='forminput' item xs={12} md={6}>
+                  <Form.Input
+      
+                  label = "Cardholder Name"
+                  placeholder = "Please enter cardholder name"
+                  name = "cardname"
+                  onChange={handleChange}
+                  value = {cardname}
+                  />
+                  <br></br>
+                </Grid>
+                <Grid class='forminput' item xs={12} md={6}>
+                  <Form.Input
+      
+                  label = "Card Number"
+                  placeholder = "Please enter your card number"
+                  name = "cardnum"
+                  onChange={handleChange}
+                  value = {cardnum}
+                  />
+                  <br></br>
+                </Grid>
+                <Grid class='forminput' item xs={12} md={6}>
+                  <Form.Input
+      
+                  label = "Expiration Date"
+                  placeholder = "Please enter card expiration date"
+                  name = "exp"
+                  onChange={handleChange}
+                  value = {exp}
+                  />
+                  <br></br>
+                </Grid>
+                <Grid class='forminput' item xs={12} md={6}>
+                  <Form.Input
+      
+                  label = "CVV"
+                  placeholder = "Please enter your cvv"
+                  name = "cvv"
+                  onChange={handleChange}
+                  value = {cvv}
+                  />
+                </Grid>
+              </Grid>
+            </React.Fragment>
 
 
-                  <Button primary 
+          <Grid item xs={12} md={6}>
+          <Button primary 
                   type = "submit" 
+                  halfWidth
+                  variant="contained"
+                  style= {{ backgroundColor: 'red'}}
+                  sx={{ mt: 3, mb: 2 }}
                   disabled = {progress !== null && progress < 100}
                   >
                     Submit
                     </Button>
+          </Grid>
+        </Paper>
+      </Container>
+
                 </Form>
                 </>
               )}
