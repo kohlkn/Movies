@@ -37,6 +37,7 @@ import YoutubeEmbed from "../Components/YoutubeEmbed";
 import {useNavigate} from 'react-router-dom'
 import firebase from 'firebase/compat/app';
 import "firebase/auth";
+import movie from '../Images/movie.jpeg'
 
 
 function Copyright() {
@@ -191,12 +192,15 @@ const Album = () => {
           }}
         >
           <Container maxWidth="sm">
-            <h1>
-              Watchdawgs 
-            </h1>
-            <h2>
-              The premier website for booking your next movie theater visit on UGA campus!
-            </h2>
+            <div>
+              <img src={movie} class='img'/>
+              <h1 class='mainhead'>
+                Watchdawgs 
+              </h1>
+              <h2 class='mainp'>
+                The premier website for booking your next movie theater visit on UGA campus!
+              </h2>
+            </div>
             <Stack
               sx={{ pt: 4 }}
               direction="row"

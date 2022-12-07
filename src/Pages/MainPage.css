@@ -14,8 +14,24 @@ h2 {
 
 .bar {
     color: red;
-    background-color: black;
+    background-color: white;
     font-family: 'Exo 2';
+}
+
+.img {
+    margin-top: -64px;
+    margin-left: -370px;
+    width: 1300px;
+}
+
+.mainhead {
+    margin-top: -850px;
+    color: red;
+}
+
+.mainp {
+    color: red;
+    margin-bottom: 700px;
 }
 /*
 .login {
