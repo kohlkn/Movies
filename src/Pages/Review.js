@@ -102,11 +102,13 @@ export default function Review() {
   
   return (
     <React.Fragment>
+      {users && users.map((item) => (
+      <>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-      {users && users.map((item) => (
+      
           <ListItem key={item.movieId} sx={{ py: 1, px: 0 }}>
             <ListItemText primary={item.movieId} secondary={item.seats} />
             <Typography variant="body3">Price: ${item.ticketcost}</Typography>
@@ -114,7 +116,7 @@ export default function Review() {
             {/* <Button style= {{ color: 'red'}}><AddIcon /></Button>
             <Button style= {{ color: 'red'}}><DeleteIcon /></Button> */}
           </ListItem>
-        ))}
+        
         <TextField
             id="cardName"
             label="Promo Code"
@@ -125,10 +127,12 @@ export default function Review() {
           
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            ${total}
+            ${item.ticketnum * item.ticketcost}
           </Typography>
         </ListItem>
       </List>
+      </>
+      ))}
       <Grid container spacing={2}>
         {usersInfo && usersInfo.map((item) => (
         <><Grid item xs={12} sm={6}>
