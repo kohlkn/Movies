@@ -92,6 +92,8 @@ export default function Book() {
         </span>
       </p>
       <Button onClick={navigateToCheckout} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+      <br></br>
+      <br></br>
     </div>
   )
 }
