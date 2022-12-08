@@ -8,6 +8,12 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import firebase from 'firebase/compat/app';
+import { db } from '../firebase';
+import "firebase/auth";
+import { getDatabase, ref, child, get } from "firebase/database";
+import { useState, useEffect } from 'react'
+import { collection, deleteDoc, onSnapshot, doc } from 'firebase/firestore';
 
 const products = [
   {
@@ -42,16 +48,40 @@ const payments = [
 ];
 
 export default function Review() {
+
+  const [order, setOrder] = useState([]);
+  const [loading,setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,"order"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({id: doc.id, ...doc.data()})
+      });
+      setOrder(list);
+      //setSearchResults(list);
+      setLoading(false)
+  
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Order summary
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
-          <ListItem key={product.name} sx={{ py: 1, px: 0 }}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
+        {order && order.map((item) => (
+          <ListItem key={item.movieId} sx={{ py: 1, px: 0 }}>
+            <ListItemText primary={item.movieId} secondary={'Seats: ' + item.seats} />
+            <Typography variant="body2">${item.ticketcost * item.ticketnum}</Typography>
             <Button style= {{ color: 'red'}}><AddIcon /></Button>
             <Button style= {{ color: 'red'}}><DeleteIcon /></Button>
           </ListItem>

@@ -173,7 +173,7 @@ const Album = () => {
           <div>
             Watchdawgs
           </div>
-          <Link class='profile' href='/Profile'>{prof}</Link>
+          <Link class='profile' href='/EditPage'>{prof}</Link>
           <Link class='about' href="/About">About Us</Link>
           <Link class='contact' href="/Contact">Contact</Link>
           

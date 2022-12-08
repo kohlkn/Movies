@@ -22,6 +22,28 @@ import { db } from '../firebase';
 import "firebase/auth";
 import './MainPage.css'
 
+const item = [
+  {
+      name: '',
+      last: '',
+      addone: '',
+      addtwo: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+      cardname: '',
+      cardnum: '',
+      exp: '',
+      cvv: '',
+  }
+]
+
+const user = [
+  {
+    email: '',
+  }
+]
 
 export default function Profile(){
   //const [currentUser, logout] = useAuth()
@@ -29,7 +51,7 @@ export default function Profile(){
   const dbRef = ref(getDatabase());
   const navigate = useNavigate()
   let user = firebase.auth().currentUser;
-  const routeChange = () => navigate(`/EditPage/${user.uid}`)
+  const routeChange = () => navigate(`/EditPage`)
   const [currentUser, setCurrentUser] = useState()
 
   // const [name, getName] = useState()
@@ -102,6 +124,7 @@ useEffect(() => {
 }, []);
             
 
+if (user){
   return(
     <div>
       {users && users.map((item) => (
@@ -189,4 +212,5 @@ useEffect(() => {
       ))}
     </div>
   );
+}
 }

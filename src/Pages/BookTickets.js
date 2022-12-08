@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import {useNavigate, useParams} from 'react-router-dom';
 import {db} from '../firebase';
 import firebase from 'firebase/compat/app';
-import { collection, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const movies = [
   {
@@ -118,14 +118,32 @@ export default function Book() {
     };
   }, []);
 
+  const handleSubmit = async (seats, num, price, id) => {
+    console.log(num)
+    console.log(price)
+    console.log(id)
+    console.log(seats)
+
+  try{
+        await setDoc(doc(db, "order",'new'),{
+          ticketnum: num,
+          ticketcost: price,
+          movieId: id,
+          seats: seats + ' '
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      navigateToCheckout()
+    }
   return (
     <div className="Book">
       {movieInfo && movieInfo.map((item)=> (
         <>
         <h1>Book Tickets for <strong>{item.name}</strong></h1>
         <p>available times: {item.showtimes}</p>
-        </>
-      ))}
+        
+      
       <Movies
         movie={selectedMovie}
         onChange={movie => {
@@ -147,7 +165,11 @@ export default function Book() {
           {selectedSeats.length * selectedMovie.price}$
         </span>
       </p>
-      <Button onClick={navigateToCheckout} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+      <Button onClick={() => {handleSubmit(selectedSeats, selectedSeats.length, selectedMovie.price, item.name);}} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+      </>
+      ))}
+      <br></br>
+      <br></br>
     </div>
   )
 }
