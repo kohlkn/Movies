@@ -140,7 +140,7 @@ const Album = () => {
   const [newModalData, setNewModalData] = useState('');
   const navigate = useNavigate();
   const navigateToBooking = () => {
-    navigate('/BookTickets');
+    navigate(`/BookTickets/${modalData.id}`);
   }
 
   

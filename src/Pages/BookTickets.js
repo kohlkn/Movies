@@ -2,10 +2,10 @@ import './BookTickets.css';
 import React, { useState,useEffect } from 'react';
 import clsx from 'clsx';
 import Button from '@mui/material/Button';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import {db} from '../firebase';
 import firebase from 'firebase/compat/app';
-import { collection, onSnapshot, doc } from 'firebase/firestore';
+import { collection, onSnapshot, doc, getDoc } from 'firebase/firestore';
 
 const movies = [
   {
@@ -63,6 +63,10 @@ const ages = [
 
 const seats = Array.from({ length: 8 * 8 }, (_, i) => i)
 
+const initialState = {
+  title: ""
+}
+
 
 
 export default function Book() {
@@ -76,14 +80,31 @@ export default function Book() {
     navigate('/Checkout');
   }
 
+  const {id} = useParams();
+  // const [data, setData] = useState(initialState);
+  // useEffect(() => {
+  //   id && getSingleMovie();
+  // }, [id])
+  // const getSingleMovie = async () => {
+  //   //movies is the collection name within firebase 
+  //   const docRef = doc(db, "movies", id);
+  //   const snapshot = await getDoc(docRef);
+  //   if(snapshot.exists()) {
+  //     setData({...snapshot.data()});
+  //   }
+  // };
+  
+
+
   useEffect(() => {
     setLoading(true);
     //the collection db, "movies" calls upon a database named movies in the firebase setup
     const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
       let list = [];
       snapshot.docs.forEach((doc) => {
-        // list.push({id: doc.id, ...doc.data()})
+        if(doc.id == id){
         list.push({id: doc.id, ...doc.data()})
+        }
       });
       setMovieInfo(list);
       //setSearchResults(list);
@@ -99,6 +120,12 @@ export default function Book() {
 
   return (
     <div className="Book">
+      {movieInfo && movieInfo.map((item)=> (
+        <>
+        <h1>Book Tickets for <strong>{item.name}</strong></h1>
+        <p>available times: {item.showtimes}</p>
+        </>
+      ))}
       <Movies
         movie={selectedMovie}
         onChange={movie => {
@@ -121,8 +148,6 @@ export default function Book() {
         </span>
       </p>
       <Button onClick={navigateToCheckout} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
-      <br></br>
-      <br></br>
     </div>
   )
 }

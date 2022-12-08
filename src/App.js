@@ -33,7 +33,7 @@ return (
         <Route path='/SignIn' element={<SignIn/>} />
         <Route path='/Checkout' element={<Checkout/>} />
         <Route path='/RegistrationConfirm' element={<RegistrationConfirm/>} />
-        <Route path='/BookTickets' element={<Book/>} />
+        <Route path='/BookTickets/:id' element={<Book/>} />
         <Route path='/AdminView' element={<AdminView/>} />
         <Route path='/Profile' element={<PersonalProfile/>} />
         <Route path='/EditPage' element={<Edit/>} />
