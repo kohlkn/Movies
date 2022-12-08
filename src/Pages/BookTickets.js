@@ -153,6 +153,34 @@ export default function Book() {
 }
 
 function Movies({ movie, onChange }) {
+
+  const [movieInfo, setMovieInfo] = useState([])
+  const [loading,setLoading] = useState(false);
+
+  const {id} = useParams();
+
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        if(doc.id == id){
+        list.push({id: doc.id, ...doc.data()})
+        }
+      });
+      setMovieInfo(list);
+      //setSearchResults(list);
+      setLoading(false)
+
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+
   return (
     <div>
     <div className="Movies">
@@ -175,6 +203,7 @@ function Movies({ movie, onChange }) {
 
     <div className="Time">
     <label htmlFor="time">Time</label>
+    
     <select
         id="time"
         value={times.time}
@@ -182,9 +211,9 @@ function Movies({ movie, onChange }) {
         onChange(times.find(times => times.time === e.target.value))
         }}
     >
-    {times.map(times => (
-    <option key={times.time} value={times.time}>
-      {times.time}
+    {movieInfo && movieInfo.map((item)=> (
+    <option key={item.showtimes} value={item.showtimes}>
+      {item.showtimes}
     </option>
     
     ))}
