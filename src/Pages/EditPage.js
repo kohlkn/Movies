@@ -411,11 +411,9 @@ const handleSubmit = async (e) => {
   let errors = validate();
   if(Object.keys(errors).length) return setErrors(errors);
   setIsSubmit(true);
-  await setDoc(doc(db, "users",userid),{
-    ...data,
-    timestamp: serverTimestamp(),
-  });
-  if(!userid){
+  const docRef = doc(db,"movies",userid);
+  const docSnap = await getDoc(docRef);
+  if(!docSnap.exists()){
 
 try{
       await setDoc(doc(db, "users",userid),{
