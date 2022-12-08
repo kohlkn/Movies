@@ -57,7 +57,7 @@ h2 {
 .sear {
     position: relative;
     margin-top: 5px;
-    margin-left: 40px;
+    margin-left: 30px;
 }
 
 .about {
@@ -73,6 +73,14 @@ h2 {
     margin-left: 50px;
     text-decoration: none;
     color: red;
+}
+
+.profile {
+    position: absolute;
+    margin-left: 57%;
+    text-decoration: none;
+    color: red;
+    margin-right: -20px;
 }
 
 .butt {

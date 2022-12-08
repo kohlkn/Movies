@@ -15,6 +15,7 @@ export default function Logout() {
     try {
       await logout()
       navigate("/MainPage")
+      window.location.reload(false);
     } catch {
       setError("Failed to log out")
     }

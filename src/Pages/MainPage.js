@@ -154,8 +154,10 @@ const Album = () => {
     }
   }
   var but = 'Login'
+  var prof = `     `
   if(user){
     var but = 'Logout'
+    var prof = 'Profile'
   }
   else {
     var but = 'Login'
@@ -171,8 +173,10 @@ const Album = () => {
           <div>
             Watchdawgs
           </div>
+          <Link class='profile' href='/Profile'>{prof}</Link>
           <Link class='about' href="/About">About Us</Link>
           <Link class='contact' href="/Contact">Contact</Link>
+          
           <a href class="sear"> <SearchModal /> </a>
           <button
             class='butt'
