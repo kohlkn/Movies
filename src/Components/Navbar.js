@@ -35,7 +35,7 @@ let user = firebase.auth().currentUser;
           <NavLink to="/Profile" activestyle='true'>
             Profile
           </NavLink>
-          <NavLink to={(`/EditPage/${user.uid}`)} activestyle='true'>
+          <NavLink to="/EditPage" activestyle='true'>
             Edit profile
           </NavLink>
           <NavLink to='/Logout' activestyle='true'>

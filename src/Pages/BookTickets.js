@@ -1,8 +1,11 @@
-import './BookTickets.css'
-import React, { useState } from 'react'
-import clsx from 'clsx'
+import './BookTickets.css';
+import React, { useState,useEffect } from 'react';
+import clsx from 'clsx';
 import Button from '@mui/material/Button';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom';
+import {db} from '../firebase';
+import firebase from 'firebase/compat/app';
+import { collection, onSnapshot, doc } from 'firebase/firestore';
 
 const movies = [
   {
@@ -60,13 +63,39 @@ const ages = [
 
 const seats = Array.from({ length: 8 * 8 }, (_, i) => i)
 
+
+
 export default function Book() {
-  const [selectedMovie, setSelectedMovie] = useState(movies[0])
-  const [selectedSeats, setSelectedSeats] = useState([])
+  const [selectedMovie, setSelectedMovie] = useState(movies[0]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [movieInfo, setMovieInfo] = useState([])
+  const [loading,setLoading] = useState(false);
+
   const navigate = useNavigate();
   const navigateToCheckout = () => {
     navigate('/Checkout');
   }
+
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,"movies"), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        // list.push({id: doc.id, ...doc.data()})
+        list.push({id: doc.id, ...doc.data()})
+      });
+      setMovieInfo(list);
+      //setSearchResults(list);
+      setLoading(false)
+
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
 
   return (
     <div className="Book">
