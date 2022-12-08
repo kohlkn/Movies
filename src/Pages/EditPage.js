@@ -356,55 +356,24 @@ const Edit = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const {name,last,addone, addtwo, city,state,zip,country,cardname,cardnum,exp,cvv} = data;
   const navigate = useNavigate();
-  const {id} = useParams();
+  // const {id} = useParams();
   
-
   useEffect(() => {
-    id && getSingleMovie();
-  }, [id])
+    userid && getSingleMovie();
+  }, [userid])
+
+  // useEffect(() => {
+  //   id && getSingleMovie();
+  // }, [id])
 
   const getSingleMovie = async () => {
     //movies is the collection name within firebase 
-    const docRef = doc(db, "users", id);
+    const docRef = doc(db, "users", userid);
     const snapshot = await getDoc(docRef);
     if(snapshot.exists()) {
       setData({...snapshot.data()});
     }
   };
-
-
-  useEffect(() => {
-    const uploadFile = () => {
-      const name = new Date().getTime() + file.name;
-      console.log(name)
-      const storageRef = ref(storage, file.name);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      uploadTask.on("state_changed", (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setProgress(progress);
-        switch(snapshot.state) {
-          case "paused":
-            console.log("upload is paused");
-            break;
-          case "running":
-            console.log("upload is running");
-            break;
-          default:
-            break;
-        }
-      }, (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setData((prev) => ({...prev, img: downloadURL}));
-        });
-      }
-      );
-    };
-    file && uploadFile();
-  }, [file]);
 
 
 const handleChange = (e) => {
@@ -414,17 +383,14 @@ const handleChange = (e) => {
 const validate = () => {
   let errors = {};
   if(!name){
-    errors.name = "name is required";
+    errors.name = "First Name is required";
   }
   if(!last){
-    errors.last = "last is required";
+    errors.last = "Last name is required";
   }
   if(!addone){
     errors.addone = "address line one is required";
   }
-  // if(!addtwo){
-  //   errors.addtwo = "addtwo is required";
-  // }
   if(!city){
     errors.city = "city is required";
   }
@@ -445,16 +411,10 @@ const handleSubmit = async (e) => {
   let errors = validate();
   if(Object.keys(errors).length) return setErrors(errors);
   setIsSubmit(true);
-  if(!id){
-  //   try{
-  //     await addDoc(collection(db, "users"),{
-  //       ...data,
-  //       timestamp: serverTimestamp(),
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  const docRef = doc(db,"movies",userid);
+  const docSnap = await getDoc(docRef);
+  if(!docSnap.exists()){
+
 try{
       await setDoc(doc(db, "users",userid),{
         ...data,
@@ -477,7 +437,7 @@ try{
   }
   
 
-    //after creating a new movie, navigate to the home page
+    //after editing profile navigate to the profile page
     navigate("/Profile");
 };
   return (
@@ -529,7 +489,7 @@ try{
           <Form.Input 
                   label = "Address Line 1"
                   error={errors.addone ? {content:errors.addone} : null}
-                  placeholder = "Enter addone"
+                  placeholder = "Enter Address Line 1"
                   name = "addone"
                   onChange={handleChange}
                   value = {addone}
@@ -540,7 +500,7 @@ try{
           <Form.Input 
                   label = "Address Line 2"
                   error={errors.addtwo ? {content:errors.addtwo} : null}
-                  placeholder = "Enter addtwo"
+                  placeholder = "Enter Address Line 2"
                   name = "addtwo"
                   onChange={handleChange}
                   value = {addtwo}
@@ -550,7 +510,7 @@ try{
         <Grid class='forminput' item xs={12} sm={6}>
           <Form.Input
                   label = "City"
-                  placeholder = "Enter Release Date here"
+                  placeholder = "Enter City here"
                   name = "city"
                   onChange={handleChange}
                   value = {city}

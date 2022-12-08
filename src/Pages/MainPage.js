@@ -88,7 +88,7 @@ const Album = () => {
   const [loading,setLoading] = useState(false);
   //const [searchResults, setSearchResults] = useState([]);
 
-  let user = firebase.auth().currentUser;
+  var user = firebase.auth().currentUser;
   //console.log(user.uid)
   //console.log(user.email)
   
