@@ -411,6 +411,10 @@ const handleSubmit = async (e) => {
   let errors = validate();
   if(Object.keys(errors).length) return setErrors(errors);
   setIsSubmit(true);
+  await setDoc(doc(db, "users",userid),{
+    ...data,
+    timestamp: serverTimestamp(),
+  });
   if(!userid){
 
 try{
