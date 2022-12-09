@@ -147,6 +147,7 @@ export default function Review() {
     for(let i = 0; i < promos.length; i++){
       if(code == promos[i].id){
         temp = promos[i].percent
+        alert('Promo code valid')
         //console.log(promos[i].percent)
       }
     }

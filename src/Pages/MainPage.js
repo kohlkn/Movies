@@ -264,7 +264,7 @@ also datetime is just stored as a string bc im working on getting the date and t
                       <Typography class="showtime">
                         {modalData.datetime}
                       </Typography>
-                      <Button onClick={navigateToBooking} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>
+                      {/*<Button onClick={navigateToBooking} variant="contained" style= {{ backgroundColor: 'red'}}>Book Tickets</Button>*/}
                       <div><br></br></div>
                       <YoutubeEmbed embedId={modalData.youtubelink} />
                       <Typography id="modal-modal-description" sx={{ mt: 2 }}>
