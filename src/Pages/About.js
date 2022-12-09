@@ -51,7 +51,7 @@ export default function About() {
                     Samir Hadi-Cisneros
                 </h1>
                 <h2>
-                    Database Developer
+                    Database Engineer
                 </h2>
                 <h3 class='paragraph'>
                     <center>
@@ -69,10 +69,17 @@ export default function About() {
                     Frontend Developer
                 </h2>
                 <h3 class='paragraph'>
-                    Sam aided in the creation of the user inferface of the website.
-                    He also did behind the scene work such as the team deliverables and assignments.
+
                 </h3>
 
+            </div>
+            <div>
+                <h1>
+                    Sanket Veer
+                </h1>
+                <h2>
+                    Database Engineer
+                </h2>
             </div>
         </>
     )
