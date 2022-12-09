@@ -10,9 +10,10 @@ import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { db } from '../firebase';
-import { collection, onSnapshot} from 'firebase/firestore';
+import { collection, onSnapshot, getDocs} from 'firebase/firestore';
 import firebase from 'firebase/compat/app';
 import "firebase/auth";
+import FormCheckInput from 'react-bootstrap/esm/FormCheckInput';
 
 // const products = [
 //   {
@@ -57,6 +58,9 @@ export default function Review() {
   const [loading,setLoading] = useState(false);
   const [infoloading,setInfoLoading] = useState(false);
   const [usersInfo, setUsersInfo] = useState([]);
+  const [promos, setPromos] = useState([]);
+  const [code, setCode] = useState('')
+  const [percent, setPercent] = useState('')
 
   useEffect(() => {
     setLoading(true);
@@ -99,6 +103,61 @@ export default function Review() {
       unsub();
     };
   }, []);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   //the collection db, "movies" calls upon a database named movies in the firebase setup
+  //   const unsub = onSnapshot(collection(db,"promotions"), (snapshot) => {
+  //     let list = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       //console.log(code)
+  //       //console.log(doc.id)
+  //       if(doc.id == code){
+  //       list.push({id: doc.id, ...doc.data()})
+  //       //console.log(doc.percent)
+  //       }
+  //     });
+  //     setPromos(list);
+  //     //setSearchResults(list);
+  //     setLoading(false)
+  
+  //   }, (error)=> {
+  //     console.log(error);
+  //   });
+  //   return () => {
+  //     unsub();
+  //   };
+  // }, []);
+  //const value = ''
+  const onChange = (event) => {
+    setCode(event.target.value);
+  };
+
+  //var percent = ''
+  const promo = (event) => {
+    console.log(code)
+    const promoRef = collection(db, 'promotions')
+    const getDocuments = async () => {
+    const data = await getDocs(promoRef);
+      setPromos(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+    }
+    getDocuments()
+
+    var temp
+    for(let i = 0; i < promos.length; i++){
+      if(code == promos[i].id){
+        temp = promos[i].percent
+        //console.log(promos[i].percent)
+      }
+    }
+    if(temp == undefined){
+      temp = 1
+    }
+    setPercent(temp)
+
+  }
+  //console.log('hi')
+  console.log(percent)
   
   return (
     <React.Fragment>
@@ -122,14 +181,20 @@ export default function Review() {
             label="Promo Code"
             width="50%"
             color='error'
-          />
+            value={code}
+            onChange={onChange}
+            />
+            <Button onClick={promo}>sub</Button>
+          
+
         <ListItem sx={{ py: 1, px: 0 }}>
           
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            ${item.ticketnum * item.ticketcost}
+            ${item.ticketnum * item.ticketcost * percent}
           </Typography>
         </ListItem>
+            
       </List>
       </>
       ))}
