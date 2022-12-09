@@ -105,6 +105,11 @@ export default function Search() {
     if(value == movies[i].name){
       value = movies[i]
       //console.log(movies[i].id)
+      setOpen(true)
+    }
+    if(value == undefined){
+      setOpen(false)
+      alert('Movie does not exist')
     }
   }
 
@@ -125,7 +130,7 @@ export default function Search() {
           <input type="text" value={value} onChange={onChange}/>
 
           {/*<Button onClick={() => onSearch(value)} style= {{ backgroundColor: 'red', color: 'white'}}>Search</Button>*/}
-          <Button onClick={() => {setOpen(true); getVal(value); }} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
+          <Button onClick={() => { getVal(value); }} style= {{ backgroundColor: 'red', color: 'white' }}>Search</Button>
                   <Modal
                       open={open}
                       onClose={handleClose}

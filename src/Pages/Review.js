@@ -151,6 +151,7 @@ export default function Review() {
       }
     }
     if(temp == undefined){
+      alert('Promo code invalid')
       temp = 1
     }
     setPercent(temp)
