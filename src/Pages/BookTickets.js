@@ -9,24 +9,24 @@ import { collection, onSnapshot, doc, getDoc, setDoc } from 'firebase/firestore'
 
 const movies = [
   {
-    name: 'The Lego Movie',
-    price: 10,
-    occupied: [20, 21, 30, 1, 2, 8],
-  },
-  {
-    name: 'Batman',
-    price: 12,
-    occupied: [9, 41, 35, 11, 65, 26],
-  },
-  {
-    name: 'Wonderwoman',
+    name: '0-8yrs',
     price: 8,
-    occupied: [37, 25, 44, 13, 2, 3],
+    occupied: [],
   },
   {
-    name: 'The Lion King',
+    name: '9-17yrs',
     price: 9,
-    occupied: [10, 12, 50, 33, 28, 47],
+    occupied: [],
+  },
+  {
+    name: '18-64yrs',
+    price: 10,
+    occupied: [],
+  },
+  {
+    name: '+65yrs',
+    price: 6,
+    occupied: [],
   },
 ]
 
@@ -42,7 +42,7 @@ const times = [
     },
 ]
 
-const ages = [
+const agerange = [
     {
         age: '0-8yrs',
         price: 8,
@@ -206,7 +206,7 @@ function Movies({ movie, onChange }) {
   return (
     <div>
     <div className="Movies">
-      <label htmlFor="movie">Pick a movie</label>
+      <label htmlFor="movie">Age</label>
       <select
         id="movie"
         value={movie.name}
@@ -216,7 +216,7 @@ function Movies({ movie, onChange }) {
       >
         {movies.map(movie => (
           <option key={movie.name} value={movie.name}>
-            {movie.name}
+            {movie.name} (${movie.price})
           </option>
           
         ))}
@@ -242,23 +242,23 @@ function Movies({ movie, onChange }) {
     </select>
     </div>
 
-    <div className="Age">
+    {/*<div className="Age">
     <label htmlFor="age">Age</label>
     <select
         id="age"
-        value={ages.age}
+        value={agerange.age}
         onChange={e => {
-        onChange(ages.find(ages => ages.age === e.target.value))
+        onChange(agerange.find(agerange => agerange.age === e.target.value))
         }}
     >
-    {ages.map(ages => (
-    <option key={ages.age} value={ages.age}>
-      {ages.age} (${ages.price})
+    {agerange.map(agerange => (
+    <option key={agerange.age} value={agerange.age}>
+      {agerange.age} (${agerange.price})
     </option>
     
     ))}
     </select>
-    </div>
+    </div>*/}
         </div>
   )
 }
