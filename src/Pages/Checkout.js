@@ -34,11 +34,11 @@ const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
   switch (step) {
-    case 0:
+    /*case 0:
       return <AddressForm />;
     case 1:
-      return <PaymentForm />;
-    case 2:
+      return <PaymentForm />;*/
+    case 0:
       return <Review />;
     default:
       throw new Error('Unknown step');
@@ -81,7 +81,7 @@ export default function Checkout() {
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          {/*<Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label} sx={{
                 '& .MuiStepLabel-root .Mui-completed': {
@@ -105,9 +105,9 @@ export default function Checkout() {
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
-          </Stepper>
+            </Stepper>*/}
           <React.Fragment>
-            {activeStep === steps.length ? (
+            {activeStep === 1 ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
@@ -133,7 +133,8 @@ export default function Checkout() {
                     style= {{ backgroundColor: 'red'}}
                     sx={{ mt: 3, ml: 1 }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {/*activeStep === steps.length - 1 ? 'Place order' : 'Next'*/}
+                    Place Order
                   </Button>
                 </Box>
               </React.Fragment>

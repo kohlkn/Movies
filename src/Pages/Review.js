@@ -60,7 +60,7 @@ export default function Review() {
   const [usersInfo, setUsersInfo] = useState([]);
   const [promos, setPromos] = useState([]);
   const [code, setCode] = useState('')
-  const [percent, setPercent] = useState('')
+  const [percent, setPercent] = useState(1)
 
   useEffect(() => {
     setLoading(true);
