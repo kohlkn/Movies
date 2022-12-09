@@ -177,6 +177,7 @@ export default function Review() {
             {/* <Button style= {{ color: 'red'}}><AddIcon /></Button>
             <Button style= {{ color: 'red'}}><DeleteIcon /></Button> */}
           </ListItem>
+          <br></br>
         
         <TextField
             id="cardName"
@@ -186,7 +187,7 @@ export default function Review() {
             value={code}
             onChange={onChange}
             />
-            <Button onClick={promo}>sub</Button>
+            <Button onClick={promo} style= {{ backgroundColor: 'red', color: 'white', width: '10px', height: '56px'}}>enter</Button>
           
 
         <ListItem sx={{ py: 1, px: 0 }}>

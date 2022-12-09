@@ -6,6 +6,8 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {db} from '../firebase';
 import firebase from 'firebase/compat/app';
 import { collection, onSnapshot, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getListItemTextUtilityClass } from '@mui/material';
+
 
 const movies = [
   {
@@ -73,6 +75,7 @@ export default function Book() {
   const [selectedMovie, setSelectedMovie] = useState(movies[0]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [movieInfo, setMovieInfo] = useState([])
+  
   const [loading,setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -141,7 +144,6 @@ export default function Book() {
       {movieInfo && movieInfo.map((item)=> (
         <>
         <h1>Book Tickets for <strong>{item.name}</strong></h1>
-        <p>available times: {item.showtimes}</p>
         
       
       <Movies
@@ -178,6 +180,7 @@ function Movies({ movie, onChange }) {
 
   const [movieInfo, setMovieInfo] = useState([])
   const [loading,setLoading] = useState(false);
+  const [movieTime, setMovieTime] = useState([])
 
   const {id} = useParams();
 
@@ -202,9 +205,57 @@ function Movies({ movie, onChange }) {
       unsub();
     };
   }, []);
+  //console.log(id)
+
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,`movies/${id}/showtimes`), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({id: doc.id, ...doc.data()})
+      });
+      setMovieTime(list);
+      //setSearchResults(list);
+      setLoading(false)
+
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+  //console.log(item)
+
+  function getSelection(value) {
+    console.log(value)
+  }
+  var item = movieTime
+
 
   return (
     <div>
+
+    <div className="Time">
+    <label htmlFor="time">Time</label>
+    <select
+        id="time"
+        value={item.showtime}
+        onChange={e => {
+          onChange(movieTime.find(item => item.showtime === e.target.value))
+        }}
+    >
+    {movieTime.map(item => (
+    <option key={item.showtime} value={item.showtime}>
+      {item.showtime}
+    </option>
+    ))}
+    
+    
+    </select>
+    </div>
+
     <div className="Movies">
       <label htmlFor="movie">Age</label>
       <select
@@ -221,25 +272,6 @@ function Movies({ movie, onChange }) {
           
         ))}
       </select>
-    </div>
-
-    <div className="Time">
-    <label htmlFor="time">Time</label>
-    
-    <select
-        id="time"
-        value={times.time}
-        onChange={e => {
-        onChange(times.find(times => times.time === e.target.value))
-        }}
-    >
-    {movieInfo && movieInfo.map((item)=> (
-    <option key={item.showtimes} value={item.showtimes}>
-      {item.showtimes}
-    </option>
-    
-    ))}
-    </select>
     </div>
 
     {/*<div className="Age">
@@ -291,12 +323,38 @@ function Cinema({ movie, selectedSeats, onSelectedSeatsChange }) {
     }
   }
 
+  const {id} = useParams();
+
+  const [loading,setLoading] = useState(false);
+  const [movieTime, setMovieTime] = useState([])
+  useEffect(() => {
+    setLoading(true);
+    //the collection db, "movies" calls upon a database named movies in the firebase setup
+    const unsub = onSnapshot(collection(db,`movies/${id}/showtimes`), (snapshot) => {
+      let list = [];
+      snapshot.docs.forEach((doc) => {
+        list.push({id: doc.id, ...doc.data()})
+      });
+      setMovieTime(list);
+      //setSearchResults(list);
+      setLoading(false)
+      //console.log(movieTime)
+
+    }, (error)=> {
+      console.log(error);
+    });
+    return () => {
+      unsub();
+    };
+  }, []);
+  //console.log(movieTime)
+
   return (
     <div className="Cinema">
       <div className="screen" />
-
       <div className="seats">
         {seats.map(seat => {
+          //console.log(movieTime[0].occupied)
           const isSelected = selectedSeats.includes(seat)
           const isOccupied = movie.occupied.includes(seat)
           return (

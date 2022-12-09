@@ -16,8 +16,9 @@
 }
 
 .Movies {
-  margin-top: 50px;
-  margin-bottom: 24px;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  margin-left: 50px;
 }
 
 .Time {
