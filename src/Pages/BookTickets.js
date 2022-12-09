@@ -11,22 +11,22 @@ const movies = [
   {
     name: '0-8yrs',
     price: 8,
-    occupied: [],
+    occupied: [2, 13, 35, 34, 40, 55, 56],
   },
   {
     name: '9-17yrs',
     price: 9,
-    occupied: [],
+    occupied: [2, 13, 35, 34, 40, 55, 56],
   },
   {
     name: '18-64yrs',
     price: 10,
-    occupied: [],
+    occupied: [2, 13, 35, 34, 40, 55, 56],
   },
   {
     name: '+65yrs',
     price: 6,
-    occupied: [],
+    occupied: [2, 13, 35, 34, 40, 55, 56],
   },
 ]
 
