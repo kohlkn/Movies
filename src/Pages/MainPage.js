@@ -140,7 +140,13 @@ const Album = () => {
   const [newModalData, setNewModalData] = useState('');
   const navigate = useNavigate();
   const navigateToBooking = () => {
-    navigate(`/BookTickets/${modalData.id}`);
+    if(user){
+      navigate(`/BookTickets/${modalData.id}`);
+    }
+    else {
+      alert('Must login to book movies')
+    }
+    
   }
 
   
